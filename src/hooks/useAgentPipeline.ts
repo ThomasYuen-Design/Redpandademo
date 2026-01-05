@@ -735,7 +735,7 @@ export const useAgentPipeline = () => {
     // Determine status and metrics from traces per agent service
     // Determine status and metrics from traces per agent service
     const metricsMap: Record<string, { latencies: number[], errors: number, count: number, last_active: number }> = {};
-    const latestStatus: Record<string, string> = {};
+    // const latestStatus: Record<string, string> = {};
 
     traces.forEach(trace => {
       const svc = trace.service;

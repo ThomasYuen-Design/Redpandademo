@@ -12,13 +12,12 @@ interface TraceRowProps {
 
 export const TraceRow: React.FC<TraceRowProps> = ({ trace, expanded, onClick }) => {
   // Parsing the Waterfall Structure - Adapting to new "stage" based keys
-  const triggerSpan = trace.spans.find(s => s.stage === 'INGEST' || (s as any).type === 'trigger');
-  const agentSpan = trace.spans.find(s => s.stage === 'AGENT_CORE' || (s as any).type === 'llm_thought' || s.stage === 'GOVERNANCE_CHECK');
-  const actionSpan = trace.spans.find(s => s.stage === 'SINK' || (s as any).type === 'tool_execution' || (s as any).type === 'system_event' || s.stage === 'ROUTING');
+  const triggerSpan = trace.spans.find(s => s.stage === 'INGEST' || s.type === 'trigger');
+  const agentSpan = trace.spans.find(s => s.stage === 'AGENT_CORE' || s.type === 'llm_thought' || s.stage === 'GOVERNANCE_CHECK');
+  const actionSpan = trace.spans.find(s => s.stage === 'SINK' || s.type === 'tool_execution' || s.type === 'system_event' || s.stage === 'ROUTING');
 
   const dateStr = new Date(trace.timestamp).toISOString().replace('T', ' ').replace('Z', '');
-  // @ts-ignore
-  const duration = trace.latency_ms || trace.total_duration_ms;
+  const duration = trace.latency_ms || trace.total_duration_ms || 0;
   
   // Dynamic Styles based on status
   const rowBg = expanded ? 'bg-slate-50' : 'bg-white';
@@ -126,7 +125,7 @@ export const TraceRow: React.FC<TraceRowProps> = ({ trace, expanded, onClick }) 
 
               <div className={`bg-white p-4 rounded border shadow-sm flex flex-col ${
                 agentSpan.status === 'TIMEOUT' ? 'border-red-300 ring-1 ring-red-100' : 
-                (agentSpan as any).status === 'HIGH_LATENCY' ? 'border-orange-300' : 'border-slate-200'
+                agentSpan.status === 'HIGH_LATENCY' ? 'border-orange-300' : 'border-slate-200'
               }`}>
                  <div className="text-xs font-semibold text-slate-700 mb-3 flex justify-between">
                    <span>{agentSpan.operation || "Processing"}</span>
@@ -156,9 +155,9 @@ export const TraceRow: React.FC<TraceRowProps> = ({ trace, expanded, onClick }) 
                  </div>
                  
                  {/* Interceptor Pattern: Result Object */}
-                 {(agentSpan as any).result && (
+                 {agentSpan.result && (
                     <div className="mb-2">
-                       <JsonViewer data={(agentSpan as any).result} label="Check Result" collapsed={true} />
+                       <JsonViewer data={agentSpan.result} label="Check Result" collapsed={true} />
                     </div>
                  )}
                  

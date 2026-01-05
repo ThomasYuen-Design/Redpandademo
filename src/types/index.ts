@@ -26,7 +26,7 @@ export interface Span {
   reasoning_trace?: string;
   token_usage?: TokenUsage;
   action?: string;
-  output_payload?: any; // strict: Record<string, any>
+  output_payload?: any;
   partition?: number;
   offset?: number;
   status?: string;
@@ -41,6 +41,7 @@ export interface Span {
   check_logic?: string;
   recursion_depth?: number;
   result?: any;
+  type?: string; // Added for mock data compatibility
 }
 
 export interface Trace {
@@ -49,6 +50,7 @@ export interface Trace {
   service: string;
   status: string;
   latency_ms: number;
+  total_duration_ms?: number; // Added for mock data compatibility
   spans: Span[];
 }
 

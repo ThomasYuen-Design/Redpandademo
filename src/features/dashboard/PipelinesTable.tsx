@@ -75,16 +75,7 @@ export const PipelinesTable: React.FC<PipelinesTableProps> = ({ agents, onSelect
     {
       header: 'Model',
       className: 'hidden lg:table-cell',
-      // Assuming 'model' is not in AgentConfig strict type from my previous 'index.ts' but it was in App.jsx. 
-      // I should update AgentConfig in index.ts if I missed it!
-      // Checking index.ts content... I don't see 'model' in AgentConfig. 
-      // Wait, App.jsx had `model` in `agentsList`.
-      // I need to add `model` to AgentConfig in index.ts. 
-      // For now I'll cast or access it if I update type.
-      // I will update AgentConfig type in a follow up or assume it's there. 
-      // Actually I should update index.ts FIRST if I want strict type safety.
-      // But for this step I'll assume it's there and I will fix index.ts shortly.
-      cell: (agent: any) => (
+      cell: (agent: AgentConfig) => (
          <div className="text-xs text-slate-600 flex items-center gap-1.5">
            <div className="w-1.5 h-1.5 rounded-full bg-slate-400"></div>
            {agent.model || 'N/A'}

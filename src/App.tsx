@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TopBar } from './components/layout/TopBar';
 import { AgentDashboard } from './features/dashboard/AgentDashboard';
 import { StreamView } from './features/dashboard/StreamView';

@@ -57,7 +57,7 @@ export function DataTable<T extends BaseRecord>({
                   )}
                 >
                   {columns.map((col, i) => (
-                    <td key={i} className="px-6 py-4">
+                    <td key={i} className={cn("px-6 py-4", col.className)}>
                       {col.cell 
                         ? col.cell(row) 
                         : (col.accessorKey ? row[col.accessorKey] : null)

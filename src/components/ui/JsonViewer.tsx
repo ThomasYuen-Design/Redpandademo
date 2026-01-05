@@ -11,6 +11,14 @@ interface JsonViewerProps {
 
 export const JsonViewer: React.FC<JsonViewerProps> = ({ data, label, collapsed = false, className }) => {
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className={cn("font-mono text-xs text-slate-300 bg-[#1e293b] rounded border border-slate-700 overflow-hidden", className)}>
@@ -24,7 +32,13 @@ export const JsonViewer: React.FC<JsonViewerProps> = ({ data, label, collapsed =
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[10px] text-slate-500">{JSON.stringify(data).length} bytes</span>
-          <Copy size={10} className="text-slate-500 hover:text-slate-300" />
+          <button 
+            onClick={handleCopy}
+            className="text-slate-500 hover:text-slate-300 transition-colors focus:outline-none"
+            title="Copy to clipboard"
+          >
+            {copied ? <span className="text-emerald-500 text-[10px] font-bold">Copied!</span> : <Copy size={12} />}
+          </button>
         </div>
       </div>
       

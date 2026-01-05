@@ -52,12 +52,24 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ stats }) => {
         <CardContent className="flex items-start justify-between p-4">
           <div>
             <div className="text-xs font-medium text-slate-500 uppercase tracking-wide">Cluster Latency (p99)</div>
-            <div className={`mt-1 text-2xl font-bold ${stats.cluster_latency_p99 > 1000 ? 'text-amber-600' : 'text-slate-900'}`}>{stats.cluster_latency_p99.toLocaleString()}ms</div>
-            <div className={`mt-1 text-xs font-medium ${stats.cluster_latency_p99 > 1000 ? 'text-amber-600' : 'text-emerald-600'}`}>
-               {stats.cluster_latency_p99 > 1000 ? '⚠️ Exceeds threshold (1s)' : '✓ Within limits'}
+            <div className={`mt-1 text-2xl font-bold ${
+              stats.cluster_latency_p99 > 10000 ? 'text-rose-600' : 
+              stats.cluster_latency_p99 > 1000 ? 'text-amber-600' : 'text-slate-900'
+            }`}>
+              {stats.cluster_latency_p99.toLocaleString()}ms
+            </div>
+            <div className={`mt-1 text-xs font-medium ${
+              stats.cluster_latency_p99 > 10000 ? 'text-rose-600' :
+              stats.cluster_latency_p99 > 1000 ? 'text-amber-600' : 'text-emerald-600'
+            }`}>
+               {stats.cluster_latency_p99 > 10000 ? 'Critical Latency (>10s)' :
+                stats.cluster_latency_p99 > 1000 ? '⚠️ Exceeds threshold (1s)' : '✓ Within limits'}
             </div>
           </div>
-          <div className={`p-2 rounded ${stats.cluster_latency_p99 > 1000 ? 'bg-amber-50 text-amber-500' : 'bg-slate-50 text-slate-400'}`}>
+          <div className={`p-2 rounded ${
+            stats.cluster_latency_p99 > 10000 ? 'bg-rose-50 text-rose-600' :
+            stats.cluster_latency_p99 > 1000 ? 'bg-amber-50 text-amber-500' : 'bg-slate-50 text-slate-400'
+          }`}>
             <Server size={20} />
           </div>
         </CardContent>

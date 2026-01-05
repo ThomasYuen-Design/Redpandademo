@@ -31,8 +31,10 @@ export const PipelinesTable: React.FC<PipelinesTableProps> = ({ agents, onSelect
         </div>
       ),
     },
+
     {
       header: 'Tools',
+      className: 'hidden lg:table-cell',
       cell: (agent: AgentConfig) => (
         <div className="flex flex-wrap gap-1.5">
           {agent.capabilities.slice(0, 3).map((tool, idx) => (
@@ -69,8 +71,10 @@ export const PipelinesTable: React.FC<PipelinesTableProps> = ({ agents, onSelect
         </TooltipProvider>
       )
     },
+
     {
       header: 'Model',
+      className: 'hidden lg:table-cell',
       // Assuming 'model' is not in AgentConfig strict type from my previous 'index.ts' but it was in App.jsx. 
       // I should update AgentConfig in index.ts if I missed it!
       // Checking index.ts content... I don't see 'model' in AgentConfig. 

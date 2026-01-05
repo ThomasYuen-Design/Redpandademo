@@ -1,16 +1,44 @@
-# React + Vite
+# 🐼 RedPanda Agent Observability Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A **Design Engineering Prototype** simulating the "Agentic Data Plane."
+> This project demonstrates how Redpanda could visualize, trace, and debug AI Agent pipelines in a streaming environment.
 
-Currently, two official plugins are available:
+## 🎯 Project Overview
+**RedPandaAgentDemo** is a real-time observability dashboard designed to monitor AI agents (Workers, Orchestrators, Sidecars) as they process streaming data. It visualizes the intersection of **Event Streaming (Redpanda)** and **LLM Reasoning**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🏗️ Architecture & Engineering Standards
+This project was architected to demonstrate **frontend practices** suitable for enterprise data tools:
 
-## React Compiler
+* **Strict TypeScript Migration:** 100% type-safe codebase with comprehensive interfaces (`AgentConfig`, `Trace`, `Span`) defined in `src/types`.
+* **Feature-Based Architecture:** Scalable directory structure grouping logic by domain (`features/dashboard`) rather than technical type.
+* **Atomic Design System:** Reusable UI primitives (`Badge`, `Card`, `DataTable`) extracted to `src/components/ui` to enforce consistency.
+* **Separation of Concerns:** Business logic and data generation are isolated in custom hooks (`useAgentPipeline`), keeping view components pure.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📦 Tech Stack
+* **Core:** React 19, TypeScript, Vite
+* **Styling:** TailwindCSS, Lucide React, clsx/tailwind-merge
+* **Architecture:** Custom Hooks + Feature Folders
 
-## Expanding the ESLint configuration
+## 🎨 Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. The "Swimlane" Trace Visualization
+A custom implementation visualizing the 3-stage lifecycle of an AI Agent:
+* **Ingest:** Source topic, partition, offset.
+* **Agent Core:** The "Brain" (LLM reasoning traces, tool calls, token usage).
+* **Sink:** Output actions and dead-letter queue routing.
+
+### 2. Dynamic Metrics Engine
+The `useAgentPipeline` hook calculates real-time observability metrics from the trace stream:
+* **p99 Latency:** Calculated per agent.
+* **Throughput:** Messages per second.
+* **Health Status:** Auto-determined based on error rates and latency thresholds.
+
+### 3. Agent Personas
+The demo simulates 4 distinct architectural patterns:
+* **Stream Processor:** Sentiment analysis on social feeds.
+* **Execution Router:** Low-latency crypto arbitrage.
+* **Batch Orchestrator:** Recursive reasoning on SEC filings.
+* **Policy Sidecar:** Regulatory validation interceptor.
+
+---
+*Design & Engineering by Thomas Yuen*

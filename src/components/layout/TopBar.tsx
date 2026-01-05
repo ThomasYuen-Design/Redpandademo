@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const TopBar = () => {
+export const TopBar: React.FC = () => {
   return (
     <header className="bg-[#101828] text-white h-14 flex items-center px-4 justify-between sticky top-0 z-50">
       <div className="flex items-center gap-4">

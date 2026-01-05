@@ -1,18 +1,16 @@
 import React from 'react';
 import { DashboardHeader } from './DashboardHeader';
 import { PipelinesTable } from './PipelinesTable';
-import { Filter, Search, Zap } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { AgentConfig, PipelineStats } from '../../types';
 
-export const AgentDashboard = ({ agents, onNavigate }) => {
-  const stats = {
-    total: agents.length,
-    healthy: agents.filter(a => a.status === 'HEALTHY').length,
-    degraded: agents.filter(a => a.status === 'DEGRADED').length,
-    failed: agents.filter(a => a.status === 'FAILED').length,
-    p99: Math.max(...agents.map(a => a.metrics.p99_latency), 0),
-    throughput: agents.reduce((acc, a) => acc + (a.metrics.throughput || 0), 0)
-  };
+interface AgentDashboardProps {
+  agents: AgentConfig[];
+  stats: PipelineStats;
+  onNavigate: (view: string, agentId?: string) => void;
+}
 
+export const AgentDashboard: React.FC<AgentDashboardProps> = ({ agents, stats, onNavigate }) => {
   return (
     <div className="max-w-screen-2xl mx-auto px-6 py-6">
       {/* Page Title */}
